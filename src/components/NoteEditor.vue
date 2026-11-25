@@ -122,7 +122,7 @@ onUnmounted(() => {
             title="Delete note"
             @click="deleteNote"
           >
-            ♲
+            🗑️
           </button>
         </div>
       </div>
