@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
@@ -11,7 +10,9 @@
   font-weight: 400;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -42,6 +43,7 @@ button {
   display: grid;
   grid-template-columns: 245px 340px minmax(0, 1fr);
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 }
 
@@ -51,6 +53,7 @@ button {
   padding: 28px 20px;
   background: #f8f9fb;
   border-right: 1px solid #eceef2;
+  overflow-y: auto;
 
   .brand {
     display: flex;
@@ -66,6 +69,7 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
     width: 36px;
     height: 36px;
     background: #292929;
@@ -127,6 +131,7 @@ button {
     span:first-child {
       width: 28px;
       font-size: 17px;
+      flex-shrink: 0;
     }
 
     &:hover {
@@ -183,6 +188,7 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
     width: 35px;
     height: 35px;
     border-radius: 50%;
@@ -196,9 +202,11 @@ button {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  min-height: 0;
   padding: 30px 20px;
   border-right: 1px solid #eceef2;
   background: #ffffff;
+  overflow: hidden;
 
   .list-header {
     margin-bottom: 25px;
@@ -224,6 +232,7 @@ button {
     border-radius: 8px;
     margin-bottom: 20px;
     color: #9ca1aa;
+    flex-shrink: 0;
 
     input {
       flex: 1;
@@ -242,12 +251,14 @@ button {
       border: 1px solid #e8e8e8;
       border-radius: 4px;
       font-size: 10px;
+      flex-shrink: 0;
     }
   }
 
   .notes-container {
     overflow-y: auto;
     flex: 1;
+    min-height: 0;
   }
 
   .note-item {
@@ -273,6 +284,7 @@ button {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 8px;
     }
 
     h3 {
@@ -286,6 +298,7 @@ button {
     .favorite-icon {
       color: #e9aa37;
       font-size: 13px;
+      flex-shrink: 0;
     }
 
     .note-preview {
@@ -302,6 +315,7 @@ button {
     .note-meta {
       display: flex;
       justify-content: space-between;
+      gap: 8px;
       margin-top: 12px;
       color: #a6a9b0;
       font-size: 10px;
@@ -334,15 +348,22 @@ button {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  min-height: 0;
   background: #ffffff;
+  overflow-y: auto;
 
   .editor-toolbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 73px;
+    min-height: 73px;
     padding: 0 35px;
     border-bottom: 1px solid #eceef2;
+    position: sticky;
+    top: 0;
+    background: inherit;
+    z-index: 2;
   }
 
   .save-status {
@@ -547,101 +568,118 @@ button {
 
 @media (max-width: 700px) {
   .dashboard {
-    grid-template-columns: 65px minmax(0, 1fr);
+    grid-template-columns: 58px minmax(0, 1fr);
+    grid-template-rows: 42vh minmax(0, 1fr);
+    grid-template-rows: 42dvh minmax(0, 1fr);
   }
 
   .sidebar {
-    padding: 20px 8px;
+    grid-row: 1 / 3;
+    padding: 16px 6px;
 
     .brand {
       justify-content: center;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
 
-      span {
+      span:not(.brand-icon) {
         display: none;
       }
     }
 
     .new-note-btn {
+      height: 40px;
+      margin-bottom: 24px;
       font-size: 0;
       padding: 0;
 
       span {
-        font-size: 23px;
+        font-size: 20px;
         margin: 0;
       }
     }
 
     .sidebar-label,
-    .nav-item:not(.theme-toggle),
     .nav-item .nav-count,
-    .profile,
-    .theme-toggle {
-      font-size: 0;
+    .profile {
+      display: none;
     }
 
     .nav-item {
       justify-content: center;
       padding: 0;
+      height: 38px;
+      font-size: 0;
 
       span:first-child {
         width: auto;
-        font-size: 19px;
+        font-size: 18px;
       }
     }
-
-    .profile {
-      display: none;
-    }
-  }
-
-  .dashboard {
-    grid-template-rows: minmax(0, 1fr);
-  }
-
-  .note-list {
-    padding: 22px 12px;
-  }
-
-  .editor {
-    display: none;
-  }
-}
-
-@media (max-width: 700px) {
-  .dashboard {
-    grid-template-columns: 65px minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
-  }
-
-  .sidebar {
-    grid-row: 1 / 3;
   }
 
   .note-list {
     grid-column: 2;
     grid-row: 1;
-    padding: 15px 12px;
+    padding: 12px;
+    border-right: none;
+    border-bottom: 1px solid #eceef2;
+
+    .list-header {
+      margin-bottom: 10px;
+
+      h2 {
+        font-size: 16px;
+      }
+
+      p {
+        margin-top: 3px;
+      }
+    }
+
+    .search-box {
+      height: 36px;
+      margin-bottom: 10px;
+
+      .search-shortcut {
+        display: none;
+      }
+    }
+
+    .note-item {
+      padding: 11px 10px;
+      margin-bottom: 6px;
+    }
   }
 
   .editor {
-    display: flex;
     grid-column: 2;
     grid-row: 2;
-    min-height: 0;
     border-top: 1px solid #eceef2;
-  }
 
-  .editor .editor-content {
-    padding: 20px;
-  }
+    .editor-toolbar {
+      height: 52px;
+      min-height: 52px;
+      padding: 0 14px;
+    }
 
-  .editor .editor-title {
-    font-size: 22px;
-  }
+    .editor-content {
+      padding: 18px 16px 32px;
+    }
 
-  .editor .editor-textarea {
-    min-height: 150px;
-    margin-top: 15px;
+    .editor-title {
+      font-size: 20px;
+      letter-spacing: -0.5px;
+    }
+
+    .editor-info {
+      margin-top: 8px;
+    }
+
+    .editor-textarea {
+      min-height: 180px;
+      margin-top: 18px;
+      font-size: 14px;
+      line-height: 1.7;
+    }
   }
 }
